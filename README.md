@@ -1,2 +1,2 @@
-# padroes-de-projeto
+# Design Patterns
 Exemplos de Padrões de Projetos
