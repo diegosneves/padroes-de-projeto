@@ -1,0 +1,97 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class AbstractFactoryDemo {
+  + AbstractFactoryDemo(): 
+  + main(String[]): void
+}
+interface Cadeira << interface >> {
+  + sentar(): Boolean
+  + temPernas(): Boolean
+}
+class CadeiraModerna {
+  + CadeiraModerna(): 
+  + sentar(): Boolean
+  + temPernas(): Boolean
+}
+class CadeiraVitoriana {
+  + CadeiraVitoriana(): 
+  + sentar(): Boolean
+  + temPernas(): Boolean
+}
+class Cliente {
+  + Cliente(FabricaDeMobilia): 
+  - fabricaDeMobilia: FabricaDeMobilia
+  + criarMobiliaEMostrarDadosDaCriacao(Integer): void
+  + criarMobiliaEMostrarDadosDaCriacao(): void
+}
+interface FabricaDeMobilia << interface >> {
+  + getFamilia(): Familia
+  + criarCadeira(): Cadeira
+  + criarSofa(Integer): Sofa
+}
+class FabricaDeMobiliaModerna {
+  + FabricaDeMobiliaModerna(): 
+  + criarCadeira(): Cadeira
+  + criarSofa(Integer): Sofa
+  + getFamilia(): Familia
+}
+class FabricaDeMobiliaVitoriana {
+  + FabricaDeMobiliaVitoriana(): 
+  + criarCadeira(): Cadeira
+  + criarSofa(Integer): Sofa
+  + getFamilia(): Familia
+}
+enum Familia << enumeration >> {
+  + Familia(): 
+  + VICTORIANA: 
+  + MODERNA: 
+  + values(): Familia[]
+  + valueOf(String): Familia
+}
+interface Sofa << interface >> {
+  + temPernas(): Boolean
+  + quantidadeDeLugares(): Integer
+}
+class SofaModerno {
+  + SofaModerno(Integer): 
+  - quantidadeDeLugares: Integer
+  + quantidadeDeLugares(): Integer
+  + temPernas(): Boolean
+}
+class SofaVictoriano {
+  + SofaVictoriano(Integer): 
+  - quantidadeDeLugares: Integer
+  + quantidadeDeLugares(): Integer
+  + temPernas(): Boolean
+}
+
+AbstractFactoryDemo        -[#bbbbbb,dashed]->  Cliente                   
+AbstractFactoryDemo        -[#bbbbbb,dashed]->  FabricaDeMobiliaModerna   
+AbstractFactoryDemo        -[#bbbbbb,dashed]->  FabricaDeMobiliaVitoriana 
+CadeiraModerna             -[#609350,dashed]-^  Cadeira                   
+CadeiraVitoriana           -[#609350,dashed]-^  Cadeira                   
+Cliente                    -[#bbbbbb,dashed]->  Cadeira                   
+Cliente                   "1" *-[#bbbbbb,plain]-> "fabricaDeMobilia\n1" FabricaDeMobilia          
+Cliente                    -[#bbbbbb,dashed]->  Sofa                      
+FabricaDeMobilia           -[#bbbbbb,dashed]->  Cadeira                   
+FabricaDeMobilia           -[#bbbbbb,dashed]->  Familia                   
+FabricaDeMobilia           -[#bbbbbb,dashed]->  Sofa                      
+FabricaDeMobiliaModerna    -[#bbbbbb,dashed]->  Cadeira                   
+FabricaDeMobiliaModerna    -[#bbbbbb,dashed]->  CadeiraModerna            
+FabricaDeMobiliaModerna    -[#609350,dashed]-^  FabricaDeMobilia          
+FabricaDeMobiliaModerna    -[#bbbbbb,dashed]->  Familia                   
+FabricaDeMobiliaModerna    -[#bbbbbb,dashed]->  Sofa                      
+FabricaDeMobiliaModerna    -[#bbbbbb,dashed]->  SofaModerno               
+FabricaDeMobiliaVitoriana  -[#bbbbbb,dashed]->  Cadeira                   
+FabricaDeMobiliaVitoriana  -[#bbbbbb,dashed]->  CadeiraVitoriana          
+FabricaDeMobiliaVitoriana  -[#609350,dashed]-^  FabricaDeMobilia          
+FabricaDeMobiliaVitoriana  -[#bbbbbb,dashed]->  Familia                   
+FabricaDeMobiliaVitoriana  -[#bbbbbb,dashed]->  Sofa                      
+FabricaDeMobiliaVitoriana  -[#bbbbbb,dashed]->  SofaVictoriano            
+SofaModerno                -[#609350,dashed]-^  Sofa                      
+SofaVictoriano             -[#609350,dashed]-^  Sofa                      
+@enduml

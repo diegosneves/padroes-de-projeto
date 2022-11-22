@@ -1,0 +1,68 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class Aviao {
+  + Aviao(): 
+  + entregar(): void
+}
+class Caminhao {
+  + Caminhao(): 
+  + entregar(): void
+}
+enum Entregas << enumeration >> {
+  - Entregas(String, String): 
+  + TERRESTRE: 
+  + MARITIMA: 
+  - oQue: String
+  + AEREA: 
+  - porOnde: String
+  + values(): Entregas[]
+  + valueOf(String): Entregas
+  + exibirMensagem(): void
+}
+class FactoryMethodDemo {
+  + FactoryMethodDemo(): 
+  + situacaoDaEntrega(Logistica): void
+  + main(String[]): void
+}
+class Logistica {
+  + Logistica(): 
+  + criarTransporte(): Transporte
+  + planoDeEntrega(): void
+}
+class LogisticaAerea {
+  + LogisticaAerea(): 
+  + criarTransporte(): Transporte
+}
+class LogisticaMaritima {
+  + LogisticaMaritima(): 
+  + criarTransporte(): Transporte
+}
+class LogisticaTerrestre {
+  + LogisticaTerrestre(): 
+  + criarTransporte(): Transporte
+}
+class Navio {
+  + Navio(): 
+  + entregar(): void
+}
+interface Transporte << interface >> {
+  + entregar(): void
+}
+
+Aviao               -[#609350,dashed]-^  Transporte         
+Caminhao            -[#609350,dashed]-^  Transporte         
+FactoryMethodDemo   -[#bbbbbb,dashed]->  LogisticaAerea     : "«create»"
+FactoryMethodDemo   -[#bbbbbb,dashed]->  LogisticaMaritima  : "«create»"
+FactoryMethodDemo   -[#bbbbbb,dashed]->  LogisticaTerrestre : "«create»"
+LogisticaAerea      -[#bbbbbb,dashed]->  Aviao              : "«create»"
+LogisticaAerea      -[#589df6,plain]-^  Logistica          
+LogisticaMaritima   -[#589df6,plain]-^  Logistica          
+LogisticaMaritima   -[#bbbbbb,dashed]->  Navio              : "«create»"
+LogisticaTerrestre  -[#bbbbbb,dashed]->  Caminhao           : "«create»"
+LogisticaTerrestre  -[#589df6,plain]-^  Logistica          
+Navio               -[#609350,dashed]-^  Transporte         
+@enduml

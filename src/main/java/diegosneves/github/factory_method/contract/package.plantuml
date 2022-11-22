@@ -1,0 +1,47 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class Contrato {
+  + Contrato(): 
+  + criarContrato(): TipoDeContrato
+  + tipoDeContrato(): void
+}
+class ContratoCustomizado {
+  + ContratoCustomizado(): 
+  + criarContrato(): TipoDeContrato
+}
+class ContratoPadrao {
+  + ContratoPadrao(): 
+  + criarContrato(): TipoDeContrato
+}
+class Customizado {
+  + Customizado(): 
+  + exibirContrato(): void
+}
+class FactoryContratoDemo {
+  + FactoryContratoDemo(): 
+  - contrato: Contrato
+  + main(String[]): void
+  - exibirContrato(Contrato): void
+}
+class Padrao {
+  + Padrao(): 
+  + exibirContrato(): void
+}
+interface TipoDeContrato << interface >> {
+  + exibirContrato(): void
+}
+
+ContratoCustomizado  -[#589df6,plain]-^  Contrato            
+ContratoCustomizado  -[#bbbbbb,dashed]->  Customizado         : "«create»"
+ContratoPadrao       -[#589df6,plain]-^  Contrato            
+ContratoPadrao       -[#bbbbbb,dashed]->  Padrao              : "«create»"
+Customizado          -[#609350,dashed]-^  TipoDeContrato      
+FactoryContratoDemo "1" *-[#bbbbbb,plain]-> "contrato\n1" Contrato            
+FactoryContratoDemo  -[#bbbbbb,dashed]->  ContratoCustomizado : "«create»"
+FactoryContratoDemo  -[#bbbbbb,dashed]->  ContratoPadrao      : "«create»"
+Padrao               -[#609350,dashed]-^  TipoDeContrato      
+@enduml
