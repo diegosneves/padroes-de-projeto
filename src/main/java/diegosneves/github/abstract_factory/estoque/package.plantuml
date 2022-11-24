@@ -1,0 +1,118 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+enum Capa << enumeration >> {
+  + Capa(): 
+  + NORMAL: 
+  + DURA: 
+  + values(): Capa[]
+  + valueOf(String): Capa
+}
+class Demo {
+  + Demo(): 
+  - fabricar: Fabricar
+  + main(String[]): void
+}
+interface FabricaAbstrata << interface >> {
+  + criarFilme(): Filmes
+  + criarLivro(): Livro
+}
+class FabricaAbstrataDigital {
+  + FabricaAbstrataDigital(): 
+  + criarLivro(): Livro
+  + criarFilme(): Filmes
+}
+class FabricaAbstrataFisica {
+  + FabricaAbstrataFisica(): 
+  + criarLivro(): Livro
+  + criarFilme(): Filmes
+}
+class Fabricar {
+  + Fabricar(FabricaAbstrata): 
+  - fabricaAbstrata: FabricaAbstrata
+  + fabricarItens(): void
+}
+class FilmeDigital {
+  + FilmeDigital(String, Integer, Double): 
+  - nome: String
+  - tempoDeFilme: Integer
+  - tamanhoDoArquivo: Double
+  + getTipo(): Tipo
+  + toString(): String
+  + getDuracao(): Integer
+}
+class FilmeFisico {
+  + FilmeFisico(String, Integer): 
+  - nome: String
+  - tempoDeFilme: Integer
+  + toString(): String
+  + getTipo(): Tipo
+  + getDuracao(): Integer
+}
+interface Filmes << interface >> {
+  + getDuracao(): Integer
+  + getTipo(): Tipo
+}
+interface Livro << interface >> {
+  + getTipo(): Tipo
+  + totalDePaginas(): Integer
+}
+class LivroDigital {
+  + LivroDigital(String, Integer, Double): 
+  - paginas: Integer
+  - nome: String
+  - tamanhoDoArquivo: Double
+  + totalDePaginas(): Integer
+  + getTipo(): Tipo
+  + toString(): String
+  + getTamanhoDoArquivo(): Double
+}
+class LivroFisico {
+  + LivroFisico(String, Integer, Capa): 
+  - paginas: Integer
+  - nome: String
+  - capa: Capa
+  + getTipo(): Tipo
+  + toString(): String
+  + totalDePaginas(): Integer
+}
+enum Tipo << enumeration >> {
+  + Tipo(): 
+  + DIGITAL: 
+  + FISICO: 
+  + valueOf(String): Tipo
+  + values(): Tipo[]
+}
+
+Demo                    -[#595959,dashed]->  FabricaAbstrataDigital 
+Demo                    -[#595959,dashed]->  FabricaAbstrataFisica  
+Demo                   "1" *-[#595959,plain]-> "fabricar\n1" Fabricar               
+FabricaAbstrata         -[#595959,dashed]->  Filmes                 
+FabricaAbstrata         -[#595959,dashed]->  Livro                  
+FabricaAbstrataDigital  -[#008200,dashed]-^  FabricaAbstrata        
+FabricaAbstrataDigital  -[#595959,dashed]->  FilmeDigital           
+FabricaAbstrataDigital  -[#595959,dashed]->  Filmes                 
+FabricaAbstrataDigital  -[#595959,dashed]->  Livro                  
+FabricaAbstrataDigital  -[#595959,dashed]->  LivroDigital           
+FabricaAbstrataFisica   -[#595959,dashed]->  Capa                   
+FabricaAbstrataFisica   -[#008200,dashed]-^  FabricaAbstrata        
+FabricaAbstrataFisica   -[#595959,dashed]->  FilmeFisico            
+FabricaAbstrataFisica   -[#595959,dashed]->  Filmes                 
+FabricaAbstrataFisica   -[#595959,dashed]->  Livro                  
+FabricaAbstrataFisica   -[#595959,dashed]->  LivroFisico            
+Fabricar               "1" *-[#595959,plain]-> "fabricaAbstrata\n1" FabricaAbstrata        
+FilmeDigital            -[#008200,dashed]-^  Filmes                 
+FilmeDigital            -[#595959,dashed]->  Tipo                   
+FilmeFisico             -[#008200,dashed]-^  Filmes                 
+FilmeFisico             -[#595959,dashed]->  Tipo                   
+Filmes                  -[#595959,dashed]->  Tipo                   
+Livro                   -[#595959,dashed]->  Tipo                   
+LivroDigital            -[#008200,dashed]-^  Livro                  
+LivroDigital            -[#595959,dashed]->  Tipo                   
+LivroFisico            "1" *-[#595959,plain]-> "capa\n1" Capa                   
+LivroFisico             -[#008200,dashed]-^  Livro                  
+LivroFisico             -[#595959,dashed]->  Tipo                   
+@enduml
