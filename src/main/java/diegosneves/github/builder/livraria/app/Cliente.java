@@ -13,6 +13,8 @@ public class Cliente {
         Editora editora = new Editora();
         Builder builder = new DigitalBuilder();
 
+        System.out.println();
+
         editora.criarLivroDigital(builder);
         Livro resultado = builder.getResultado();
         System.out.println(resultado);
