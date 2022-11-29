@@ -26,7 +26,6 @@ public class Cliente {
 
         System.out.println();
 
-        builder = new FisicoBuilder();
         editora.criarLivroFisicoCapaSimples(builder);
         resultado = builder.getResultado();
         System.out.println(resultado);
