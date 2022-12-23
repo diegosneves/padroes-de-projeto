@@ -1,0 +1,66 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+interface Builder << interface >> {
+  + setPortas(Integer): void
+  + setGaragem(Boolean): void
+  + setPisos(Integer): void
+  + setJanelas(Integer): void
+  + setMaterial(Material): void
+}
+class Casa {
+  + Casa(Material, Integer, Integer, Integer, Boolean): 
+  - material: Material
+  - pisos: Integer
+  - portas: Integer
+  - janelas: Integer
+  - garagem: Boolean
+  + toString(): String
+}
+class CasaBuilder {
+  + CasaBuilder(): 
+  - garagem: Boolean
+  - material: Material
+  - pisos: Integer
+  - portas: Integer
+  - janelas: Integer
+  + setPisos(Integer): void
+  + setMaterial(Material): void
+  + getResultado(): Casa
+  + setPortas(Integer): void
+  + setJanelas(Integer): void
+  + setGaragem(Boolean): void
+}
+class Construtora {
+  + Construtora(): 
+  + construirCasaDePedraComGaragem(Builder): void
+  + construirCasaDePedraDoisPisosComGaragem(Builder): void
+  + construirCasaDePedraSemGaragem(Builder): void
+}
+class Demo {
+  + Demo(): 
+  + main(String[]): void
+}
+enum Material << enumeration >> {
+  + Material(): 
+  + MADEIRA: 
+  + PEDRA: 
+  + PALHA: 
+  + valueOf(String): Material
+  + values(): Material[]
+}
+
+Builder      -[#595959,dashed]->  Material    
+Casa        "1" *-[#595959,plain]-> "material\n1" Material    
+CasaBuilder  -[#008200,dashed]-^  Builder     
+CasaBuilder  -[#595959,dashed]->  Casa        
+CasaBuilder "1" *-[#595959,plain]-> "material\n1" Material    
+Construtora  -[#595959,dashed]->  Builder     
+Construtora  -[#595959,dashed]->  Material    
+Demo         -[#595959,dashed]->  Casa        
+Demo         -[#595959,dashed]->  CasaBuilder 
+Demo         -[#595959,dashed]->  Construtora 
+@enduml

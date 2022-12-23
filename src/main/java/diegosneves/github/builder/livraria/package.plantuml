@@ -1,0 +1,85 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+interface Builder << interface >> {
+  + setTipoDeLivro(TipoDeLivro): void
+  + setTotalDePaginas(Integer): void
+  + setTitulo(String): void
+  + getResultado(): Livro
+}
+class Cliente {
+  + Cliente(): 
+  + main(String[]): void
+}
+class Digital {
+  + Digital(Double): 
+  - tamanhoDoArquivo: Double
+  + toString(): String
+  + getTipo(): Tipo
+}
+class DigitalBuilder {
+  + DigitalBuilder(): 
+  - tipoDeLivro: TipoDeLivro
+  - titulo: String
+  - totalDePaginas: Integer
+  + setTitulo(String): void
+  + setTotalDePaginas(Integer): void
+  + setTipoDeLivro(TipoDeLivro): void
+  + getResultado(): Livro
+}
+class Editora {
+  + Editora(): 
+  + criarLivroFisicoCapaDura(Builder): void
+  + criarLivroDigital(Builder): void
+  + criarLivroFisicoCapaSimples(Builder): void
+}
+class Fisico {
+  + Fisico(Capa): 
+  - capa: Capa
+  + getTipo(): Tipo
+  + toString(): String
+}
+class FisicoBuilder {
+  + FisicoBuilder(): 
+  - tipoDeLivro: TipoDeLivro
+  - totalDePaginas: Integer
+  - titulo: String
+  + setTitulo(String): void
+  + setTipoDeLivro(TipoDeLivro): void
+  + getResultado(): Livro
+  + setTotalDePaginas(Integer): void
+}
+class Livro {
+  + Livro(String, Integer, TipoDeLivro): 
+  - totalDePaginas: Integer
+  - titulo: String
+  - tipoDeLivro: TipoDeLivro
+  + toString(): String
+}
+interface TipoDeLivro << interface >> {
+  + getTipo(): Tipo
+}
+
+Builder         -[#595959,dashed]->  Livro          
+Builder         -[#595959,dashed]->  TipoDeLivro    
+Cliente         -[#595959,dashed]->  Builder        
+Cliente         -[#595959,dashed]->  DigitalBuilder 
+Cliente         -[#595959,dashed]->  Editora        
+Cliente         -[#595959,dashed]->  FisicoBuilder  
+Cliente         -[#595959,dashed]->  Livro          
+Digital         -[#008200,dashed]-^  TipoDeLivro    
+DigitalBuilder  -[#008200,dashed]-^  Builder        
+DigitalBuilder  -[#595959,dashed]->  Livro          
+DigitalBuilder "1" *-[#595959,plain]-> "tipoDeLivro\n1" TipoDeLivro    
+Editora         -[#595959,dashed]->  Builder        
+Editora         -[#595959,dashed]->  Digital        
+Editora         -[#595959,dashed]->  Fisico         
+Fisico          -[#008200,dashed]-^  TipoDeLivro    
+FisicoBuilder   -[#008200,dashed]-^  Builder        
+FisicoBuilder   -[#595959,dashed]->  Livro          
+FisicoBuilder  "1" *-[#595959,plain]-> "tipoDeLivro\n1" TipoDeLivro    
+Livro          "1" *-[#595959,plain]-> "tipoDeLivro\n1" TipoDeLivro    
+@enduml
